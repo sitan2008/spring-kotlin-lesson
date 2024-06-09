@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: kotlin_rest_api
+
+server:
+  port: 9080
