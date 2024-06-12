@@ -20,7 +20,7 @@ class PersonResourceImpl(
 ) : PersonResource {
 
     // <Get, Post, Path, Delete>_Mapping вказуємо які саме методи класу відповідають за певний http method
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // Ідентифікатор ресурсу
     override fun findById(@PathVariable id: Long): ResponseEntity<PersonResponse?> {
         return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.findById(id))
     }
