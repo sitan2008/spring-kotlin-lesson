@@ -4,6 +4,7 @@ import com.example.kotlin_rest_api.domain.Person
 import com.example.kotlin_rest_api.dto.AddPersonRequest
 import org.springframework.stereotype.Component
 
+// Мапер який конвертує певний датаклас в доменну модель Person
 @Component
 class AddPersonRequestTransformer : Transformer<AddPersonRequest, Person> {
     override fun transform(source: AddPersonRequest): Person {
