@@ -25,7 +25,7 @@ class PersonResourceImpl(
         return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.findById(id))
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     override fun findAll(): ResponseEntity<List<PersonResponse>> {
         return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.findAll())
     }
