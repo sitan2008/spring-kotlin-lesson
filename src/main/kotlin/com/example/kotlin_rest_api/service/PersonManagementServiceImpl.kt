@@ -13,11 +13,16 @@ import org.springframework.stereotype.Service
 //Імплементація PersonManagementService
 @Service
 class PersonManagementServiceImpl(
-    private val personDao: PersonDao,
-    private val addPersonRequestTransformer: AddPersonRequestTransformer
+    private val personDao: PersonDao, private val addPersonRequestTransformer: AddPersonRequestTransformer
 ) : PersonManagementService {
 
-    override fun findById(id: Long): PersonResponse? = this.findPersonById(id).toPersonResponse()
+    override fun findById(id: Long): PersonResponse? {
+        val person = this.findPersonById(id) ?: throw IllegalStateException(
+            "Can't find person with id: id=${id}"
+        )
+
+        return person.toPersonResponse()
+    }
 
     override fun findAll(): List<PersonResponse> = this.personDao.findAll().map(Person::toPersonResponse)
 
@@ -32,16 +37,17 @@ class PersonManagementServiceImpl(
             "Can't find person with id: id=${updatePersonRequest.id}"
         )
 
-        return this.saveOrUpdate(
-            person.apply {
-                this.name = updatePersonRequest.name
-                this.lastName = updatePersonRequest.lastName
-            }
-        )
+        return this.saveOrUpdate(person.apply {
+            this.name = updatePersonRequest.name
+            this.lastName = updatePersonRequest.lastName
+        })
     }
 
-    override fun deleteById(id: Long) {
-        TODO("Not yet implemented")
+    override fun deleteById(id: Long): Unit {
+        val person = this.findPersonById(id) ?: throw IllegalStateException(
+            "Can't find person with id: id=${id}"
+        )
+        return this.personDao.deleteById(person.id)
     }
 
     private fun findPersonById(id: Long): Person? = this.personDao.findByIdOrNull(id)
