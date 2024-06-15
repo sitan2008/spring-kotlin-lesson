@@ -3,13 +3,10 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: jdbc:h2:file:${user.home}/Downloads/kotlin_rest_api/db
-    username: admin
-    password: admin
-  jpa:
-    hibernate:
-      ddl-auto: update
-
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_DB_HOST}:${POSTGRES_DB_PORT}/${POSTGRES_DB_NAME}
+    username: ${POSTGRES_DB_USERNAME}
+    password: ${POSTGRES_DB_PASSWORD}
 logging:
   level:
     org:
