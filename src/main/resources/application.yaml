@@ -3,9 +3,9 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: some
-    username: some
-    password: some
+    url: jdbc:h2:file:${user.home}/Downloads/kotlin_rest_api/db
+    username: admin
+    password: admin
   jpa:
     hibernate:
       ddl-auto: update
