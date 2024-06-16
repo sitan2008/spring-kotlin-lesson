@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
-@ControllerAdvice
+@ControllerAdvice // в данному випадку використовується для хендлу помилки IllegalStateException, яка може виникнути в сервіс леєрі
 class ErrorHandlerResource {
 
     @ExceptionHandler(IllegalStateException::class)
