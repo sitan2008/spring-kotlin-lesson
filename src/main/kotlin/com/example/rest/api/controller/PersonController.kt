@@ -1,10 +1,10 @@
-package com.example.kotlin_rest_api.repource
+package com.example.rest.api.controller
 
-import com.example.kotlin_rest_api.dto.AddPersonRequest
-import com.example.kotlin_rest_api.dto.PersonResponse
-import com.example.kotlin_rest_api.dto.UpdatePersonRequest
-import com.example.kotlin_rest_api.repource.PersonController.Companion.BASE_PERSON_URL
-import com.example.kotlin_rest_api.service.PersonManagementService
+import com.example.rest.api.dto.AddPersonRequest
+import com.example.rest.api.dto.PersonResponse
+import com.example.rest.api.dto.UpdatePersonRequest
+import com.example.rest.api.controller.PersonController.Companion.BASE_PERSON_URL
+import com.example.rest.api.service.PersonManagementService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -12,17 +12,14 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
-// Вказуємо Spring що цей клас - рест контроллер
+
 @RestController
-// Вказуємо шлях до ресурсу за який відповідає цей рест контроллер
 @RequestMapping(value = [BASE_PERSON_URL])
-// Імплементація PersonResource
 class PersonController(
     private val personManagementService: PersonManagementService
 ) {
 
-    // <Get, Post, Path, Delete>_Mapping вказуємо які саме методи класу відповідають за певний http method
-    @GetMapping("/{id}") // Ідентифікатор ресурсу
+    @GetMapping("/{id}")
     fun findById(@PathVariable id: Long): ResponseEntity<PersonResponse?> {
         return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.findById(id))
     }
@@ -32,7 +29,7 @@ class PersonController(
         return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.findAll(pageable))
     }
 
-    @PostMapping // @RequestBody вказує Spring що потрібно розпарсити body запиту, та прокинути його в аргумент методу
+    @PostMapping
     fun save(@RequestBody addPersonRequest: AddPersonRequest): ResponseEntity<PersonResponse> {
         val personResponse = this.personManagementService.save(addPersonRequest)
         return ResponseEntity.created(URI.create(BASE_PERSON_URL.plus("/${personResponse.id}"))).body(personResponse)

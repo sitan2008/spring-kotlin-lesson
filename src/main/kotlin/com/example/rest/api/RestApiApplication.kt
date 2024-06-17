@@ -1,12 +1,12 @@
-package com.example.kotlin_rest_api
+package com.example.rest.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class KotlinRestApiApplication
+class RestApiApplication
 
 
 fun main(args: Array<String>) {
-    runApplication<KotlinRestApiApplication>(*args)
+    runApplication<RestApiApplication>(*args)
 }

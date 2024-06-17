@@ -1,21 +1,19 @@
-package com.example.kotlin_rest_api.service
+package com.example.rest.api.service
 
-import com.example.kotlin_rest_api.dto.AddPersonRequest
-import com.example.kotlin_rest_api.dto.PersonResponse
-import com.example.kotlin_rest_api.dao.PersonDao
-import com.example.kotlin_rest_api.domain.Person
-import com.example.kotlin_rest_api.dto.UpdatePersonRequest
-import com.example.kotlin_rest_api.transformer.AddPersonRequestTransformer
+import com.example.rest.api.dto.AddPersonRequest
+import com.example.rest.api.dto.PersonResponse
+import com.example.rest.api.repository.PersonRepository
+import com.example.rest.api.domain.Person
+import com.example.rest.api.dto.UpdatePersonRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 
-//Імплементація PersonManagementService
 @Service
 class PersonManagementService(
-    private val personDao: PersonDao, private val addPersonRequestTransformer: AddPersonRequestTransformer
+    private val personRepository: PersonRepository,
 ) {
 
     fun findById(id: Long): PersonResponse? {
@@ -27,11 +25,11 @@ class PersonManagementService(
     }
 
     fun findAll(pageable: Pageable): Page<PersonResponse> =
-        this.personDao.findAll(pageable).map(Person::toPersonResponse)
+        this.personRepository.findAll(pageable).map(Person::toPersonResponse)
 
     fun save(addPersonRequest: AddPersonRequest): PersonResponse {
         return this.saveOrUpdate(
-            addPersonRequestTransformer.transform(addPersonRequest)
+            addPersonRequest.toDomain()
         )
     }
 
@@ -50,10 +48,10 @@ class PersonManagementService(
         val person = this.findPersonById(id) ?: throw IllegalStateException(
             "Can't find person with id: id=${id}"
         )
-        return this.personDao.deleteById(person.id)
+        return this.personRepository.deleteById(person.id)
     }
 
-    private fun findPersonById(id: Long): Person? = this.personDao.findByIdOrNull(id)
+    private fun findPersonById(id: Long): Person? = this.personRepository.findByIdOrNull(id)
 
-    private fun saveOrUpdate(person: Person): PersonResponse = this.personDao.save(person).toPersonResponse()
+    private fun saveOrUpdate(person: Person): PersonResponse = this.personRepository.save(person).toPersonResponse()
 }

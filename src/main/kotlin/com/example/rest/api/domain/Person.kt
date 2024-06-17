@@ -1,8 +1,7 @@
-package com.example.kotlin_rest_api.domain
+package com.example.rest.api.domain
 
 import jakarta.persistence.*
 
-// Доменна модель, і в одночас модель бази даних
 @Entity
 @Table(name = "person")
 data class Person(

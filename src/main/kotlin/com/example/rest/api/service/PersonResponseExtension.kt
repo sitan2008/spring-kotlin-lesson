@@ -1,7 +1,8 @@
-package com.example.kotlin_rest_api.service
+package com.example.rest.api.service
 
-import com.example.kotlin_rest_api.domain.Person
-import com.example.kotlin_rest_api.dto.PersonResponse
+import com.example.rest.api.domain.Person
+import com.example.rest.api.dto.PersonResponse
+
 
 fun Person?.toPersonResponse(): PersonResponse {
     return PersonResponse(
