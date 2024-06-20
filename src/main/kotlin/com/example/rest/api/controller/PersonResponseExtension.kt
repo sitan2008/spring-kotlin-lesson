@@ -1,4 +1,4 @@
-package com.example.rest.api.service
+package com.example.rest.api.controller
 
 import com.example.rest.api.domain.Person
 import com.example.rest.api.dto.PersonResponse

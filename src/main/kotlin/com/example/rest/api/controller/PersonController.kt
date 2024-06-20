@@ -31,13 +31,13 @@ class PersonController(
 
     @PostMapping
     fun save(@RequestBody addPersonRequest: AddPersonRequest): ResponseEntity<PersonResponse> {
-        val personResponse = this.personManagementService.save(addPersonRequest)
+        val personResponse = this.personManagementService.save(addPersonRequest.toDomain())
         return ResponseEntity.created(URI.create(BASE_PERSON_URL.plus("/${personResponse.id}"))).body(personResponse)
     }
 
     @PutMapping
     fun update(@RequestBody updatePersonRequest: UpdatePersonRequest): ResponseEntity<PersonResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.update(updatePersonRequest))
+        return ResponseEntity.status(HttpStatus.OK).body(this.personManagementService.update(updatePersonRequest.toDomain()))
     }
 
     @DeleteMapping("/{id}")
